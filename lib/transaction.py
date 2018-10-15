@@ -471,7 +471,6 @@ class Transaction:
                         j = pubkeys.index(pubkey)
                         print_error("adding sig", i, j, pubkey, sig)
                         self._inputs[i]['signatures'][j] = sig
-                        #self._inputs[i]['x_pubkeys'][j] = pubkey
                         break
         # redo raw
         self.raw = self.serialize()
