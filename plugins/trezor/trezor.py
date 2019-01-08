@@ -246,8 +246,7 @@ class TrezorPlugin(HW_PluginBase):
                 "seed's actual length.  If you enter a word incorrectly or "
                 "misspell it, you cannot change it or go back - you will need "
                 "to start again from the beginning.\n\nSo please enter "
-                "the words carefully!"),
-                blocking=True)
+                "the words carefully!"))
 
         devmgr = self.device_manager()
         client = devmgr.client_by_id(device_id)
@@ -259,7 +258,7 @@ class TrezorPlugin(HW_PluginBase):
                 pin_protection=pin_protection,
                 label=label)
         elif method == TIM_RECOVER:
-            client.recovery_device(
+            client.recover_device(
                 recovery_type=recovery_type,
                 word_count=6 * (item + 2),  # 12, 18 or 24
                 passphrase_protection=passphrase_protection,
@@ -279,7 +278,7 @@ class TrezorPlugin(HW_PluginBase):
         )
         return HDNodePathType(node=node, address_n=address_n)
 
-    def setup_device(self, device_info, wizard, purpose):
+    def setup_device(self, device_info, wizard):
         '''Called when creating a new wallet.  Select the device to use.  If
         the device is uninitialized, go through the intialization
         process.'''

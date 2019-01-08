@@ -85,7 +85,7 @@ class TrezorClientBase(PrintError):
             if issubclass(exc_type, Cancelled):
                 raise UserCancelled from exc_value
             elif issubclass(exc_type, TrezorFailure):
-                raise RuntimeError(exc_value.message) from exc_value
+                raise RuntimeError(exc_value.failure.message) from exc_value
             elif issubclass(exc_type, OutdatedFirmwareError):
                 raise UserFacingException(exc_value) from exc_value
             else:
@@ -101,7 +101,7 @@ class TrezorClientBase(PrintError):
 
     def label(self):
         '''The name given by the user to the device.'''
-        return self.features.label
+        return "An unnamed trezor" if self.features.label is None else self.features.label
 
     def is_initialized(self):
         '''True if initialized, False if wiped.'''
@@ -226,6 +226,7 @@ class TrezorClientBase(PrintError):
                 self.client,
                 *args,
                 input_callback=input_callback,
+                type=recovery_type,
                 **kwargs)
 
     # ========= Unmodified trezorlib methods =========
